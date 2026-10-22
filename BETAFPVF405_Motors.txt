@@ -38,5 +38,5 @@ set dshot_burst = ON
 set motor_pwm_protocol = DSHOT600
 set motor_poles = 14
 set motor_kv = 900
-set yaw_motors_reversed = ON
+set yaw_motors_reversed = OFF
 save
