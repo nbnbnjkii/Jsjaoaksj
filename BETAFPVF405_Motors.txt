@@ -41,6 +41,6 @@ set dshot_bitbang = AUTO
 set dshot_bitbang_timer = AUTO
 set motor_pwm_protocol = DSHOT600
 set motor_poles = 14
-set motor_kv = 1960
+set motor_kv = 900
 set yaw_motors_reversed = OFF
 save
