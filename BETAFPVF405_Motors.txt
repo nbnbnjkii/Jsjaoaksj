@@ -33,8 +33,8 @@ dma pin A02 0
 # pin A02: DMA1 Stream 1 Channel 3
 
 # master
-set dshot_idle_value = 450
-set dshot_burst = ON
+set dshot_idle_value = 560
+set dshot_burst = OFF
 set motor_pwm_protocol = DSHOT600
 set motor_poles = 14
 set motor_kv = 900
