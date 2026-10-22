@@ -1,0 +1,43 @@
+# Отладка моторов (BETAFPVF405) - Если моторы не крутятся
+
+# 1. Сброс ресурсов моторов на стандартные для BETAFPVF405
+resource MOTOR 1 B00
+resource MOTOR 2 B01
+resource MOTOR 3 A03
+resource MOTOR 4 A02
+resource MOTOR 5 NONE
+resource MOTOR 6 NONE
+resource MOTOR 7 NONE
+resource MOTOR 8 NONE
+
+# 2. Установка таймеров для моторов 1-4
+timer B00 AF2
+# pin B00: TIM3 CH3 (AF2)
+timer B01 AF2
+# pin B01: TIM3 CH4 (AF2)
+timer A03 AF1
+# pin A03: TIM2 CH4 (AF1)
+timer A02 AF1
+# pin A02: TIM2 CH3 (AF1)
+
+# 3. Установка DMA для моторов 1-4
+dma pin B00 0
+# pin B00: DMA1 Stream 7 Channel 5
+dma pin B01 0
+# pin B01: DMA1 Stream 2 Channel 5
+dma pin A03 1
+# pin A03: DMA1 Stream 6 Channel 3
+dma pin A02 0
+# pin A02: DMA1 Stream 1 Channel 3
+
+# 4. Протокол ESC и настройки DShot
+set dshot_bidir = OFF
+set dshot_edt = OFF
+set dshot_bitbang = OFF
+set dshot_burst = OFF
+set motor_pwm_protocol = DSHOT300
+# Понижаем DSHOT600 до DSHOT300 для большей стабильности сигнала
+set dshot_idle_value = 550
+set motor_poles = 14
+
+save
