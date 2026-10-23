@@ -1,5 +1,5 @@
-# Betaflight / APM32F405 (A405) Config (TBF79 / FF405 V04)
-# Настройки моторов, портов и радио (CRSF)
+# Betaflight / APM32F405 (A405) Config (FURYF4OSD Pinout)
+# Настройки с вашей рабочей платы (восстановление АКБ и моторов)
 
 # feature
 feature RX_SERIAL
@@ -9,7 +9,7 @@ feature AIRMODE
 # serial (CRSF на UART3)
 serial 2 64 115200 57600 0 115200
 
-# resources (FF405 V04 / FURYF4OSD pinout)
+# resources (Точная копия с вашей рабочей платы FURYF4OSD)
 resource BEEPER 1 A08
 resource MOTOR 1 A03
 resource MOTOR 2 B00
@@ -50,29 +50,35 @@ resource GYRO_EXTI 1 C04
 resource GYRO_CS 1 A04
 resource USB_DETECT 1 C05
 
-# timer (соответствует пинам моторов)
+# timer (Точная копия с рабочей платы)
+timer C09 AF3
 timer A03 AF1
-# pin A03: TIM2 CH4 (AF1)
 timer B00 AF2
-# pin B00: TIM3 CH3 (AF2)
 timer B01 AF2
-# pin B01: TIM3 CH4 (AF2)
 timer A02 AF1
-# pin A02: TIM2 CH3 (AF1)
+timer A00 AF2
+timer B09 AF3
 
-# dma (соответствует таймерам моторов)
-dma pin A03 1
-# pin A03: DMA1 Stream 6 Channel 3
-dma pin B00 0
-# pin B00: DMA1 Stream 7 Channel 5
-dma pin B01 0
-# pin B01: DMA1 Stream 2 Channel 5
-dma pin A02 0
-# pin A02: DMA1 Stream 1 Channel 3
+# dma (Точная копия с рабочей платы)
 dma ADC 1 1
-# ADC 1: DMA2 Stream 4 Channel 0 (ADC_CURR, ADC_BATT)
+dma pin C09 0
+dma pin A03 1
+dma pin B00 0
+dma pin B01 0
+dma pin A02 0
+dma pin A00 0
+dma pin B09 NONE
 
-# master (Настройки радио, моторов и сенсоров)
+# Настройки батареи и сенсоров тока (Точная копия с рабочей платы)
+set current_meter = ADC
+set battery_meter = ADC
+set vbat_scale = 110
+set vbat_divider = 10
+set vbat_multiplier = 1
+set ibata_scale = 400
+set ibata_offset = 0
+
+# master (Настройки радио и моторов)
 set serialrx_provider = CRSF
 set motor_kv = 900
 set motor_poles = 14
@@ -81,7 +87,5 @@ set yaw_motors_reversed = ON
 set dshot_bidir = OFF
 set dshot_edt = OFF
 set dshot_bitbang = AUTO
-set current_meter = ADC
-set battery_meter = ADC
 
 save
