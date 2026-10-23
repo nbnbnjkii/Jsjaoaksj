@@ -1,0 +1,92 @@
+# Betaflight / APM32F405 (A405) Config (TBF79 / BETAFPVF405)
+# Настройки моторов, портов и радио (CRSF)
+
+# feature
+feature RX_SERIAL
+feature OSD
+feature AIRMODE
+
+# serial (CRSF на UART3)
+serial 2 64 115200 57600 0 115200
+
+# resources
+resource BEEPER 1 B04
+resource MOTOR 1 B00
+resource MOTOR 2 B01
+resource MOTOR 3 A03
+resource MOTOR 4 A02
+resource MOTOR 5 C08
+resource MOTOR 6 A08
+resource PPM 1 B08
+resource SONAR_TRIGGER 1 C09
+resource SONAR_ECHO 1 A08
+resource LED_STRIP 1 B06
+resource SERIAL_TX 1 A09
+resource SERIAL_TX 3 B10
+resource SERIAL_TX 4 A00
+resource SERIAL_TX 6 C06
+resource SERIAL_RX 1 A10
+resource SERIAL_RX 3 B11
+resource SERIAL_RX 4 A01
+resource SERIAL_RX 5 D02
+resource SERIAL_RX 6 C07
+resource INVERTER 3 C09
+resource INVERTER 6 C08
+resource LED 1 B05
+resource SPI_SCK 1 A05
+resource SPI_SCK 2 B13
+resource SPI_SCK 3 C10
+resource SPI_SDI 1 A06
+resource SPI_SDI 2 B14
+resource SPI_SDI 3 C11
+resource SPI_SDO 1 A07
+resource SPI_SDO 2 B15
+resource SPI_SDO 3 C12
+resource ESCSERIAL 1 B08
+resource ADC_BATT 1 C02
+resource ADC_RSSI 1 C00
+resource ADC_CURR 1 C01
+resource BARO_CS 1 B03
+resource FLASH_CS 1 B12
+resource OSD_CS 1 A15
+resource GYRO_EXTI 1 C04
+resource GYRO_CS 1 A04
+resource USB_DETECT 1 C05
+
+# timer
+timer B08 AF3
+timer C08 AF3
+timer B00 AF2
+timer B01 AF2
+timer A03 AF1
+timer A02 AF1
+timer B06 AF2
+timer A08 AF1
+timer A09 AF1
+timer A10 AF1
+
+# dma
+dma SPI_SDO 2 0
+dma SPI_TX 2 0
+dma ADC 2 1
+dma pin B00 0
+dma pin B01 0
+dma pin A03 1
+dma pin A02 0
+dma pin B06 0
+dma pin A09 0
+dma pin A10 0
+
+# master (Настройки радио, моторов и сенсоров)
+set serialrx_provider = CRSF
+set motor_kv = 900
+set motor_poles = 14
+set motor_pwm_protocol = DSHOT600
+set yaw_motors_reversed = ON
+set dshot_bidir = OFF
+set dshot_edt = OFF
+set dshot_bitbang = AUTO
+set current_meter = ADC
+set battery_meter = ADC
+
+save
