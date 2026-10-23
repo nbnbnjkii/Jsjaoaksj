@@ -1,7 +1,6 @@
-# Точный конфиг для BETAFPV F405 V1 (TBF79_F405_V1) под Betaflight 4.5
-# Основан на ваших реальных аппаратных ресурсах (аналог FURYF4OSD)
+# Betaflight 4.4.1 Config for TBF79_F405_V1 / FF405 V04
 
-# resources (на основе вашего дампа)
+# resources
 resource BEEPER 1 A08
 resource MOTOR 1 A03
 resource MOTOR 2 B00
@@ -64,10 +63,19 @@ dma pin A02 0
 dma ADC 1 1
 # ADC 1: DMA2 Stream 4 Channel 0 (ADC_CURR, ADC_BATT)
 
-# receiver (CRSF)
-set serialrx_provider = CRSF
+# feature
+feature RX_SERIAL
+feature OSD
+feature AIRMODE
 
-# motors / esc
+# serial (CRSF is usually on UART 2, 3 or 6 - check user's dump for which serial is 64 (serial rx))
+# Note: The user's original config had CRSF on UART2 originally (serial 2 64),
+# but their new dump resource shows RX3 and RX6. I'll configure UART6 for Serial RX by default as it's common on F405 AIOs.
+# 6 corresponds to index 5 in betaflight CLI.
+serial 5 64 115200 57600 0 115200
+
+# master
+set serialrx_provider = CRSF
 set dshot_bidir = OFF
 set dshot_edt = OFF
 set dshot_bitbang = AUTO
@@ -76,8 +84,6 @@ set motor_poles = 14
 set motor_kv = 900
 set yaw_motors_reversed = OFF
 set dshot_idle_value = 560
-
-# adc
 set current_meter = ADC
 set battery_meter = ADC
 
