@@ -15,7 +15,7 @@ const url = require('url');
 
 const PORT = Number(process.env.PORT || 8085);
 const TURN_DURATION_MS = Math.max(1_000, Number(process.env.TURN_DURATION_MS || 20_000));
-const SESSION_TTL_MS = 24 * 60 * 60 * 1000;
+const SESSION_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 const USERS_DB_FILE = process.env.USERS_DB_FILE || path.join(__dirname, 'users_db.json');
 const SCRYPT_PARAMS = { N: 16_384, r: 8, p: 1 };
 const SCRYPT_KEY_LENGTH = 64;
@@ -184,6 +184,8 @@ function getSession(req) {
     sessions.delete(token);
     return null;
   }
+  // Sliding expiration keeps an active client signed in while still limiting abandoned tokens.
+  session.expiresAt = Date.now() + SESSION_TTL_MS;
   return { token, nickname: session.nickname, expiresAt: session.expiresAt };
 }
 
@@ -620,7 +622,7 @@ const server = http.createServer(async (req, res) => {
       ok: true,
       isNewUser,
       sessionToken,
-      expiresAt: Date.now() + SESSION_TTL_MS,
+      expiresAt: sessions.get(sessionToken)?.expiresAt || Date.now() + SESSION_TTL_MS,
       user: {
         nickname: user.nickname,
         avatarId: user.avatarId,
@@ -652,6 +654,7 @@ const server = http.createServer(async (req, res) => {
     const socialState = serializeSocialState(user);
     return sendJson(res, 200, {
       ok: true,
+      expiresAt: session.expiresAt,
       invites: pendingInvites.get(nickname.toLowerCase()) || [],
       ...socialState
     });
